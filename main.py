@@ -183,4 +183,14 @@ while True:
         ).collidepoint(mouse_pos):
             links.remove(link)
 
+    # if mouse is pressed on right click, repell particles close
+    if pygame.mouse.get_pressed()[2]:
+        for particle in particles:
+            if particle.pinned:
+                continue
+            if (Vec2d(mouse_pos[0], mouse_pos[1]) - particle.position).magnitude() < 50:
+                particle.position += (
+                    particle.position - Vec2d(mouse_pos[0], mouse_pos[1])
+                ).normalize() * 1
+
     clock.tick(120)
